@@ -1,0 +1,13 @@
+[Unit]
+Description=Wheelbot: resume patrol on the event map after boot (~/wheelbot/autopatrol.sh)
+After=default.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+TimeoutStartSec=0
+ExecStart=/bin/bash -c 'bash %h/wheelbot/autopatrol.sh event > /tmp/autopatrol.log 2>&1'
+ExecStop=/bin/bash -c 'pkill -9 -f "[p]atrol.py"; pkill -f "[p]ose_saver.py"; bash %h/wheelbot/stop_all.sh'
+
+[Install]
+WantedBy=default.target
